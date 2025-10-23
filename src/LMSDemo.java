@@ -1,35 +1,57 @@
+import java.util.Scanner;
+
 public class LMSDemo {
     public static void main(String[] args) {
-        System.out.println("WELCOME TO THE DIYAR'S LEARNING MANAGEMENT SYSTEM!\n");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("WELCOME TO DIYAR'S LEARNING MANAGEMENT SYSTEM!\n");
 
         StudentPortalFacade studentPortal = new StudentPortalFacade();
 
-        System.out.println("========== STUDENT 1: MATH COURSE ==========");
-        Course mathCourse = new MathCourse("Advanced Calculus");
-        mathCourse = new MentorSupportDecorator(mathCourse);
-        mathCourse = new CertificateDecorator(mathCourse);
+        System.out.print("Enter your name: ");
+        String studentName = scanner.nextLine();
 
-        studentPortal.enrollInCourse(mathCourse);
-        studentPortal.startLearning(mathCourse);
-        studentPortal.completeCourse(mathCourse);
+        System.out.println("\nHello, " + studentName + "!");
+        System.out.println("Available courses:");
+        System.out.println("1. Math (Advanced Calculus)");
+        System.out.println("2. Programming (Java Masterclass)");
+        System.out.println("3. Ultimate (Full Stack Development)");
+        System.out.print("Choose your course (1-3): ");
 
-        System.out.println("========== STUDENT 2: PROGRAMMING COURSE ==========");
-        Course programmingCourse = new ProgrammingCourse("Java Masterclass");
-        programmingCourse = new GamificationDecorator(programmingCourse);
-        programmingCourse = new CertificateDecorator(programmingCourse);
+        int choice = scanner.nextInt();
+        scanner.nextLine();
 
-        studentPortal.enrollInCourse(programmingCourse);
-        studentPortal.startLearning(programmingCourse);
-        studentPortal.completeCourse(programmingCourse);
+        Course selectedCourse;
 
-        System.out.println("========== STUDENT 3: ULTIMATE COURSE ==========");
-        Course ultimateCourse = new ProgrammingCourse("Full Stack Development");
-        ultimateCourse = new CertificateDecorator(ultimateCourse);
-        ultimateCourse = new MentorSupportDecorator(ultimateCourse);
-        ultimateCourse = new GamificationDecorator(ultimateCourse);
+        switch (choice) {
+            case 1:
+                selectedCourse = new MathCourse("Advanced Calculus");
+                selectedCourse = new MentorSupportDecorator(selectedCourse);
+                selectedCourse = new CertificateDecorator(selectedCourse);
+                break;
+            case 2:
+                selectedCourse = new ProgrammingCourse("Java Masterclass");
+                selectedCourse = new GamificationDecorator(selectedCourse);
+                selectedCourse = new CertificateDecorator(selectedCourse);
+                break;
+            case 3:
+                selectedCourse = new ProgrammingCourse("Full Stack Development");
+                selectedCourse = new CertificateDecorator(selectedCourse);
+                selectedCourse = new MentorSupportDecorator(selectedCourse);
+                selectedCourse = new GamificationDecorator(selectedCourse);
+                break;
+            default:
+                System.out.println("Invalid choice. Defaulting to Math Course.");
+                selectedCourse = new MathCourse("Advanced Calculus");
+                selectedCourse = new CertificateDecorator(selectedCourse);
+        }
 
-        studentPortal.enrollInCourse(ultimateCourse);
-        studentPortal.startLearning(ultimateCourse);
-        studentPortal.completeCourse(ultimateCourse);
+        System.out.println("\nEnrolling " + studentName + " in course: " + selectedCourse.getTitle() + "\n");
+
+        studentPortal.enrollInCourse(selectedCourse);
+        studentPortal.startLearning(selectedCourse);
+        studentPortal.completeCourse(selectedCourse);
+
+        System.out.println("\nThank you for using DIYAR'S LMS, " + studentName + "!");
+        scanner.close();
     }
 }

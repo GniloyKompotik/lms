@@ -1,16 +1,27 @@
 public class MentorSupportDecorator extends CourseDecorator {
-    public MentorSupportDecorator(Course course) {
-        super(course);
+
+    public MentorSupportDecorator(Course decoratedCourse) {
+        super(decoratedCourse);
+    }
+
+    @Override
+    public void enroll() {
+        decoratedCourse.enroll();
+    }
+
+    @Override
+    public void start() {
+        decoratedCourse.start();
     }
 
     @Override
     public void deliverContent() {
-        super.deliverContent();
-        addMentorSupport();
+        decoratedCourse.deliverContent();
+        System.out.println("Mentor is providing additional support for: " + decoratedCourse.getTitle());
     }
 
-    private void addMentorSupport() {
-        System.out.println("Personal mentor support available!");
-        System.out.println("24/7 Q&A with experienced developers");
+    @Override
+    public void complete() {
+        decoratedCourse.complete();
     }
 }

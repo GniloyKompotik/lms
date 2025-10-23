@@ -1,16 +1,28 @@
 public class GamificationDecorator extends CourseDecorator {
-    public GamificationDecorator(Course course) {
-        super(course);
+
+    public GamificationDecorator(Course decoratedCourse) {
+        super(decoratedCourse);
+    }
+
+    @Override
+    public void enroll() {
+        decoratedCourse.enroll();
+    }
+
+    @Override
+    public void start() {
+        decoratedCourse.start();
     }
 
     @Override
     public void deliverContent() {
-        super.deliverContent();
-        addGamification();
+        decoratedCourse.deliverContent();
+        System.out.println("Gamification: Points, badges, and leaderboards added to " + decoratedCourse.getTitle());
     }
 
-    private void addGamification() {
-        System.out.println("Gamification enabled: Points, Badges, Leaderboard!");
-        System.out.println("Compete with friends and earn rewards!");
+    @Override
+    public void complete() {
+        decoratedCourse.complete();
+        System.out.println("Gamification: You earned a special achievement for completing " + decoratedCourse.getTitle() + "!");
     }
 }
